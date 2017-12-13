@@ -16,7 +16,7 @@
          verbose="true"
 >
     <testsuites>
-        <testsuite name="Laravel Zero Test Suite">
+        <testsuite name="Postman2doc Test Suite">
             <directory suffix="Test.php">./tests/Integration</directory>
         </testsuite>
     </testsuites>
