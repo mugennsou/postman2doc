@@ -18,9 +18,8 @@ return [
      * Here goes the application default command. By default
      * the list of commands will appear. All commands
      * application commands will be auto-detected.
-     *
-     * 'default-command' => App\Commands\HelloCommand::class,
     */
+    'default-command' => App\Commands\ConvertCommand::class,
 
     /*
      * If true, development commands won't be available as the app

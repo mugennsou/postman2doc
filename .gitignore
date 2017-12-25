@@ -1,6 +1,10 @@
 /.idea
 /vendor
 
+/database/database.sqlite
+
 composer.lock
 
-/database/database.sqlite
+1.0.json
+2.0.json
+2.1.json
