@@ -1,6 +1,6 @@
 {
     "name": "mugen/postman2doc",
-    "description": "Convert postman collection.json to md.",
+    "description": "Convert postman collection.json to markdown.",
     "keywords": ["postman", "document", "convert"],
     "license": "MIT",
     "authors": [
@@ -12,7 +12,8 @@
     "require": {
         "php": ">=7.1",
         "intonate/tinker-zero": "^1.0",
-        "laravel-zero/framework": "4.0.*"
+        "laravel-zero/framework": "4.0.*",
+        "phpoffice/phpword": "^0.13.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~6.4"

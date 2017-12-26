@@ -12,7 +12,8 @@ class ConvertV20Command extends Command
      * @var string
      */
     protected $signature = 'convert20
-                                    {file : The postman collection version 2.0.0 filename}';
+                                    {file : The postman collection version 2.0.0 filename}
+                                    {output : Output file name}';
 
     /**
      * The console command description.
@@ -22,11 +23,17 @@ class ConvertV20Command extends Command
     protected $description = 'Convert postman collection to markdown.';
 
     /**
+     * @var string
+     */
+    protected $version = 'v2.0.0';
+
+    /**
      * Execute the console command.
      *
      * @return mixed
      */
     public function handle(): void
     {
+        $this->warn('I am working for v2.0.0, please stay tuned for updates.');
     }
 }

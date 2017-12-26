@@ -2,12 +2,12 @@
 
 namespace App\Commands;
 
+use App\Commands\Traits\PostmanCollectionFile;
 use LaravelZero\Framework\Commands\Command;
 
 class ConvertCommand extends Command
 {
-    use FilePath,
-        PostmanCollectionFile;
+    use PostmanCollectionFile;
 
     /**
      * The name and signature of the console command.
@@ -41,38 +41,34 @@ class ConvertCommand extends Command
             $maybePostmanFiles->toArray()
         );
 
-        $postmanFilePath = $this->realPath($postmanFile, $workDir);
+        $postmanFilePath = $this->getFileRealPath($postmanFile, $workDir);
 
         switch ($this->getFileVersion($postmanFilePath)) {
             case 'v1.0.0':
-                $isVersion1 = $this->confirm('Is this postman collection version 1.0.0 ?');
-
-                $isVersion1
-                    ? $this->call('convert10', [
-                    'file' => $postmanFilePath
-                ])
-                    : $this->warn('User aborted.');
-
+                $command  = 'convert10';
+                $version1 = $this->confirm('Is this postman collection version 1.0.0 ?');
+                $version1 || $this->error('User abort.');
                 break;
             case 'v2.0.0':
-
-                $this->call('convert20', [
-                    'file' => $postmanFilePath
-                ]);
-
+                $command = 'convert20';
                 break;
             case 'v2.1.0':
-
-                $this->call('convert21', [
-                    'file' => $postmanFilePath
-                ]);
-
+                $command = 'convert21';
                 break;
             default:
-
                 $this->error('Unknown version postman collection.');
-
                 break;
         }
+
+        $defaultOutputFile = pathinfo($postmanFilePath)['filename'];
+
+        $outputFile = $this->getFileRealPath(
+            $this->ask('Pleas type output filename:', $defaultOutputFile) . '.markdown'
+        );
+
+        $this->call($command, [
+            'file'   => $postmanFilePath,
+            'output' => $outputFile,
+        ]);
     }
 }
