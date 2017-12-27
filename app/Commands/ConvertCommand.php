@@ -32,13 +32,14 @@ class ConvertCommand extends Command
         $workDir = getcwd();
 
         $maybePostmanFiles = collect(scandir($workDir))->filter(function ($file) {
-            return is_file($file) && ends_with($file, '.json');
+            $filePath = $this->getFileRealPath($file);
+
+            return is_file($filePath) && ends_with($filePath, '.json');
         });
 
-        $postmanFile = $this->anticipate(
-            'Which postman collection file do you want to convert ?',
-            $maybePostmanFiles->toArray()
-        );
+        $postmanFile = $maybePostmanFiles->count()
+            ? $this->choice('Which postman collection file do you want to convert ?', $maybePostmanFiles->toArray())
+            : $this->ask('Please type the postman collection file path.');
 
         $postmanFilePath = $this->getFileRealPath($postmanFile, $workDir);
 

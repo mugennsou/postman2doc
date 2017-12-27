@@ -1,7 +1,11 @@
 {
     "name": "mugen/postman2doc",
     "description": "Convert postman collection.json to markdown.",
-    "keywords": ["postman", "document", "convert"],
+    "keywords": [
+        "postman",
+        "document",
+        "convert"
+    ],
     "license": "MIT",
     "authors": [
         {
@@ -34,5 +38,7 @@
         "preferred-install": "dist",
         "sort-packages": true
     },
-    "bin": ["builds/postman2doc"]
+    "bin": [
+        "builds/postman2doc"
+    ]
 }
