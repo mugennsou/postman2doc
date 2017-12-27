@@ -153,7 +153,7 @@ class ConvertV21Command extends Command
 
     protected function parseUrl(string $method, $url): void
     {
-        $url    = $url['raw'];
+        $url = $url['raw'];
 
         $this->writeH('URL', 5);
         $this->writeCode($method);

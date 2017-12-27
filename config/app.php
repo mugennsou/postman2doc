@@ -7,12 +7,12 @@ return [
     /*
      * Here goes the application name.
      */
-    'name'            => 'Postman to document tool',
+    'name'            => 'Convert postman collection to markdown document tool',
 
     /*
      * Here goes the application version.
      */
-    'version'         => '0.1.0',
+    'version'         => '0.0.3',
 
     /*
      * Here goes the application default command. By default
@@ -25,7 +25,7 @@ return [
      * If true, development commands won't be available as the app
      * will be in the production environment.
      */
-    'production'      => false,
+    'production'      => true,
 
     /*
      * If true, scheduler commands will be available.
