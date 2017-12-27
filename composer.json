@@ -19,7 +19,6 @@
         "phpoffice/phpword": "^0.13.0"
     },
     "require-dev": {
-        "intonate/tinker-zero": "^1.0",
         "phpunit/phpunit": "~6.4"
     },
     "autoload": {
