@@ -10,23 +10,6 @@ trait WriteMarkdown
 
     protected $content = '';
 
-    protected function setOutputFile(string $outputFile): void
-    {
-        $this->outputFile = $outputFile;
-
-        if (is_file($this->outputFile)) {
-            $force = $this->confirm("$outputFile is already exists, overwrite it?");
-            $force || $this->error('Output file is already exists.');
-        }
-
-        $this->createFile();
-    }
-
-    protected function createFile(): void
-    {
-        Storage::put($this->outputFile, '');
-    }
-
     /**
      * write h1, h2 etc.
      * @param string $content
@@ -153,13 +136,25 @@ trait WriteMarkdown
         $this->content .= $content;
     }
 
-    protected function openFile(): void
+    protected function createFile(): void
     {
+        file_put_contents($this->outputFile, '');
+    }
+
+    protected function openFile(string $outputFile): void
+    {
+        $this->outputFile = $outputFile;
+
+        if (is_file($this->outputFile)) {
+            $force = $this->confirm("$outputFile is already exists, overwrite it?");
+            $force || $this->abort('Output file is already exists.');
+        }
+
         $this->createFile();
     }
 
     protected function closeFile(): void
     {
-        Storage::append($this->outputFile, $this->content, '');
+        file_put_contents($this->outputFile, file_get_contents($this->outputFile) . $this->content);
     }
 }

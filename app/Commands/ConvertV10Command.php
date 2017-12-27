@@ -2,8 +2,6 @@
 
 namespace App\Commands;
 
-use LaravelZero\Framework\Commands\Command;
-
 class ConvertV10Command extends Command
 {
     /**

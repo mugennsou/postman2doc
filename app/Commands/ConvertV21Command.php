@@ -4,7 +4,6 @@ namespace App\Commands;
 
 use App\Commands\Traits\PostmanCollectionFile;
 use App\Commands\Traits\WriteMarkdown;
-use LaravelZero\Framework\Commands\Command;
 
 class ConvertV21Command extends Command
 {
@@ -52,11 +51,11 @@ class ConvertV21Command extends Command
         $file = $this->argument('file');
 
         if ($this->getFileVersion($file) !== $this->version)
-            $this->error('This postman collection is not version 2.1.0');
+            $this->abort("This postman collection is not version 2.1.0 {$this->version}.");
 
         $item = $this->getFileContent($file)['item'];
 
-        $this->openFile();
+        $this->openFile($this->argument('output'));
 
         $this->parseInfo($this->getFileContent($file)['info']);
         $this->writeEnter();
@@ -65,6 +64,8 @@ class ConvertV21Command extends Command
         $this->parseItem($item);
 
         $this->closeFile();
+
+        $this->comment('success.');
     }
 
     /**
@@ -150,9 +151,8 @@ class ConvertV21Command extends Command
         $this->parseBody($request['body']);
     }
 
-    protected function parseUrl(string $method, array $url): void
+    protected function parseUrl(string $method, $url): void
     {
-        $method = "{$method} ";
         $url    = $url['raw'];
 
         $this->writeH('URL', 5);

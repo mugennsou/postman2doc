@@ -2,9 +2,7 @@
 
 namespace App\Commands;
 
-use LaravelZero\Framework\Commands\Command;
-
-class ConvertV20Command extends Command
+class ConvertV20Command extends ConvertV21Command
 {
     /**
      * The name and signature of the console command.
@@ -27,13 +25,13 @@ class ConvertV20Command extends Command
      */
     protected $version = 'v2.0.0';
 
-    /**
-     * Execute the console command.
-     *
-     * @return mixed
-     */
-    public function handle(): void
+    protected function parseUrl(string $method, $url): void
     {
-        $this->warn('I am working for v2.0.0, please stay tuned for updates.');
+        $url = is_array($url) ? $url['raw'] : $url;
+
+        $this->writeH('URL', 5);
+        $this->writeCode($method);
+        $this->writeCode($url);
+        $this->writeEnter();
     }
 }

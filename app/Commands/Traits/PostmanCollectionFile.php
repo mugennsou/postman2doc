@@ -45,7 +45,7 @@ trait PostmanCollectionFile
     protected function getFileContent(string $filePath): array
     {
         if (!is_file($filePath))
-            $this->error('File not exists.');
+            $this->abort('File not exists.');
 
         if (isset($this->collections[$filePath]))
             return $this->collections[$filePath];

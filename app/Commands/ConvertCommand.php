@@ -3,7 +3,6 @@
 namespace App\Commands;
 
 use App\Commands\Traits\PostmanCollectionFile;
-use LaravelZero\Framework\Commands\Command;
 
 class ConvertCommand extends Command
 {
@@ -47,7 +46,7 @@ class ConvertCommand extends Command
             case 'v1.0.0':
                 $command  = 'convert10';
                 $version1 = $this->confirm('Is this postman collection version 1.0.0 ?');
-                $version1 || $this->error('User abort.');
+                $version1 || $this->abort('User abort.');
                 break;
             case 'v2.0.0':
                 $command = 'convert20';
@@ -56,7 +55,7 @@ class ConvertCommand extends Command
                 $command = 'convert21';
                 break;
             default:
-                $this->error('Unknown version postman collection.');
+                $this->abort('Unknown version postman collection.');
                 break;
         }
 
