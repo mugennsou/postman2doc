@@ -2,9 +2,7 @@
 
 namespace App\Commands;
 
-use LaravelZero\Framework\Commands\Command;
-
-class ConvertV20Command extends Command
+class ConvertV20Command extends ConvertV21Command
 {
     /**
      * The name and signature of the console command.
@@ -12,7 +10,8 @@ class ConvertV20Command extends Command
      * @var string
      */
     protected $signature = 'convert20
-                                    {file : The postman collection version 2.0.0 filename}';
+                                    {file : The postman collection version 2.0.0 filename}
+                                    {output : Output file name}';
 
     /**
      * The console command description.
@@ -22,11 +21,17 @@ class ConvertV20Command extends Command
     protected $description = 'Convert postman collection to markdown.';
 
     /**
-     * Execute the console command.
-     *
-     * @return mixed
+     * @var string
      */
-    public function handle(): void
+    protected $version = 'v2.0.0';
+
+    protected function parseUrl(string $method, $url): void
     {
+        $url = is_array($url) ? $url['raw'] : $url;
+
+        $this->writeH('URL', 5);
+        $this->writeCode($method);
+        $this->writeCode($url);
+        $this->writeEnter();
     }
 }

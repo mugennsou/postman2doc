@@ -2,8 +2,6 @@
 
 namespace App\Commands;
 
-use LaravelZero\Framework\Commands\Command;
-
 class ConvertV10Command extends Command
 {
     /**
@@ -12,7 +10,8 @@ class ConvertV10Command extends Command
      * @var string
      */
     protected $signature = 'convert10
-                                    {file : The postman collection version 1.0.0 filename}';
+                                    {file : The postman collection version 1.0.0 filename}
+                                    {output : Output file name}';
 
     /**
      * The console command description.
@@ -20,6 +19,11 @@ class ConvertV10Command extends Command
      * @var string
      */
     protected $description = 'Convert postman collection to markdown.';
+
+    /**
+     * @var string
+     */
+    protected $version = 'v1.0.0';
 
     /**
      * Execute the console command.

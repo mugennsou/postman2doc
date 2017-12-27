@@ -2,12 +2,11 @@
 
 namespace App\Commands;
 
-use LaravelZero\Framework\Commands\Command;
+use App\Commands\Traits\PostmanCollectionFile;
 
 class ConvertCommand extends Command
 {
-    use FilePath,
-        PostmanCollectionFile;
+    use PostmanCollectionFile;
 
     /**
      * The name and signature of the console command.
@@ -33,46 +32,43 @@ class ConvertCommand extends Command
         $workDir = getcwd();
 
         $maybePostmanFiles = collect(scandir($workDir))->filter(function ($file) {
-            return is_file($file) && ends_with($file, '.json');
+            $filePath = $this->getFileRealPath($file);
+
+            return is_file($filePath) && ends_with($filePath, '.json');
         });
 
-        $postmanFile = $this->anticipate(
-            'Which postman collection file do you want to convert ?',
-            $maybePostmanFiles->toArray()
-        );
+        $postmanFile = $maybePostmanFiles->count()
+            ? $this->choice('Which postman collection file do you want to convert ?', $maybePostmanFiles->toArray())
+            : $this->ask('Please type the postman collection file path.');
 
-        $postmanFilePath = $this->realPath($postmanFile, $workDir);
+        $postmanFilePath = $this->getFileRealPath($postmanFile, $workDir);
 
         switch ($this->getFileVersion($postmanFilePath)) {
             case 'v1.0.0':
-                $isVersion1 = $this->confirm('Is this postman collection version 1.0.0 ?');
-
-                $isVersion1
-                    ? $this->call('convert10', [
-                    'file' => $postmanFilePath
-                ])
-                    : $this->warn('User aborted.');
-
+                $command  = 'convert10';
+                $version1 = $this->confirm('Is this postman collection version 1.0.0 ?');
+                $version1 || $this->abort('User abort.');
                 break;
             case 'v2.0.0':
-
-                $this->call('convert20', [
-                    'file' => $postmanFilePath
-                ]);
-
+                $command = 'convert20';
                 break;
             case 'v2.1.0':
-
-                $this->call('convert21', [
-                    'file' => $postmanFilePath
-                ]);
-
+                $command = 'convert21';
                 break;
             default:
-
-                $this->error('Unknown version postman collection.');
-
+                $this->abort('Unknown version postman collection.');
                 break;
         }
+
+        $defaultOutputFile = pathinfo($postmanFilePath)['filename'];
+
+        $outputFile = $this->getFileRealPath(
+            $this->ask('Pleas type output filename:', $defaultOutputFile) . '.markdown'
+        );
+
+        $this->call($command, [
+            'file'   => $postmanFilePath,
+            'output' => $outputFile,
+        ]);
     }
 }
