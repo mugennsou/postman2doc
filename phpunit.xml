@@ -14,10 +14,11 @@
          stopOnError="false"
          stopOnFailure="false"
          verbose="true"
+         printerClass="Codedungeon\PHPUnitPrettyResultPrinter\Printer"
 >
     <testsuites>
-        <testsuite name="Postman2doc Test Suite">
-            <directory suffix="Test.php">./tests/Integration</directory>
+        <testsuite name="Postman2doc">
+            <directory suffix="Test.php">./tests/Postman2doc</directory>
         </testsuite>
     </testsuites>
     <listeners>

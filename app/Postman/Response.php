@@ -11,10 +11,11 @@ class Response implements Markdownable
     }
 
     /**
+     * TODO:
      * @return string
      */
     public function toMarkdown(): string
     {
-        // TODO: Implement toMarkdown() method.
+        return '';
     }
 }
