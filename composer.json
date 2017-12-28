@@ -20,6 +20,7 @@
         "phpoffice/phpword": "^0.13.0"
     },
     "require-dev": {
+        "codedungeon/phpunit-result-printer": "^0.4.4",
         "phpunit/phpunit": "~6.4"
     },
     "autoload": {

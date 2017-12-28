@@ -1,0 +1,204 @@
+{
+	"info": {
+		"name": "Postman Echo",
+		"_postman_id": "9af183ff-f2c0-7eac-7489-8b37961936cc",
+		"description": "Postman Echo is service you can use to test your REST clients and make sample API calls. It provides endpoints for `GET`, `POST`, `PUT`, various auth mechanisms and other utility endpoints.\n\nThe documentation for the endpoints as well as example responses can be found at [https://postman-echo.com](https://postman-echo.com?source=echo-collection-app-onboarding)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Response Status Code",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"var responseJSON;",
+							"try {",
+							"    responseJSON = JSON.parse(responseBody); ",
+							"    tests[\"Status equals 200\"] = responseJSON.status === 200;",
+							"}",
+							"catch (e) { }",
+							"tests[\"Body contains status\"] = responseBody.has(\"status\");",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://postman-echo.com/status/200",
+					"protocol": "https",
+					"host": [
+						"postman-echo",
+						"com"
+					],
+					"path": [
+						"status",
+						"200"
+					]
+				},
+				"description": "This endpoint allows one to instruct the server which status code to respond with.\n\nEvery response is accompanied by a status code. The status code provides a summary of the nature of response sent by the server. For example, a status code of `200` means everything is okay with the response and a code of `404` implies that the requested URL does not exist on server. \nA list of all valid HTTP status code can be found at the [List of Status Codes](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) wikipedia article. When using Postman, the response status code is described for easy reference.\n\nNote that if an invalid status code is requested to be sent, the server returns a status code of `400 Bad Request`."
+			},
+			"response": [
+				{
+					"id": "6f61baeb-9ab7-4dc4-8626-606858217f44",
+					"name": "200",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://postman-echo.com/status/200",
+							"protocol": "https",
+							"host": [
+								"postman-echo",
+								"com"
+							],
+							"path": [
+								"status",
+								"200"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "javascript",
+					"header": [
+						{
+							"name": "Access-Control-Allow-Credentials",
+							"key": "Access-Control-Allow-Credentials",
+							"value": "",
+							"description": ""
+						},
+						{
+							"name": "Access-Control-Allow-Headers",
+							"key": "Access-Control-Allow-Headers",
+							"value": "",
+							"description": ""
+						},
+						{
+							"name": "Access-Control-Allow-Methods",
+							"key": "Access-Control-Allow-Methods",
+							"value": "",
+							"description": ""
+						},
+						{
+							"name": "Access-Control-Allow-Origin",
+							"key": "Access-Control-Allow-Origin",
+							"value": "",
+							"description": ""
+						},
+						{
+							"name": "Connection",
+							"key": "Connection",
+							"value": "keep-alive",
+							"description": ""
+						},
+						{
+							"name": "Content-Length",
+							"key": "Content-Length",
+							"value": "14",
+							"description": ""
+						},
+						{
+							"name": "Content-Type",
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8",
+							"description": ""
+						},
+						{
+							"name": "Date",
+							"key": "Date",
+							"value": "Thu, 31 Mar 2016 11:58:47 GMT",
+							"description": ""
+						},
+						{
+							"name": "ETag",
+							"key": "ETag",
+							"value": "W/\"e-1056260003\"",
+							"description": ""
+						},
+						{
+							"name": "Server",
+							"key": "Server",
+							"value": "nginx/1.6.2",
+							"description": ""
+						},
+						{
+							"name": "Vary",
+							"key": "Vary",
+							"value": "Accept-Encoding",
+							"description": ""
+						},
+						{
+							"name": "X-Powered-By",
+							"key": "X-Powered-By",
+							"value": "Sails <sailsjs.org>",
+							"description": ""
+						}
+					],
+					"cookie": [
+						{
+							"expires": "Invalid Date",
+							"hostOnly": false,
+							"httpOnly": false,
+							"domain": ".getpostman.com",
+							"path": "/",
+							"secure": false,
+							"session": false,
+							"value": "yes",
+							"key": "getpostmanlogin"
+						},
+						{
+							"expires": "Invalid Date",
+							"hostOnly": false,
+							"httpOnly": false,
+							"domain": ".getpostman.com",
+							"path": "/",
+							"secure": false,
+							"session": false,
+							"value": "df0c0256028d7ec4d641f766104a9571a8e249685bbc667d7cee030bbf44d3209495c70c03248e31e678a93812591d5e12187a8e99bf6bc5e80c40903f6ff6226938f24e413c0ffa613a7372064ec44a8594e8d3ede6945e34394f369573feeebc4a73a3e24b8c9ac18a53704addb5fd3f71f1ede488ff551feb059e9c1fb208164814e45e0312c4df8ea6e83c26702f42ae634c6afbe82d57c857bbf5598b5527961c1c28688dc2580070a4389f0cf4ec0a179b5b9c11b2ecbaa5460d374065bf5c7a3add9505df0fa89acb9f227f05ed2d4c6b58c39d6d728bd49f6f323ae67d4a75882aa7682f5d6fc5b981ba411d94aa93970bfaefa1953a73e440d50d012b5f288975c888e2345ee7777e746fb5aed3a7b2dbc087c6456621aa78c24a3c17c5f96cf59844933249a352f631e2008cffac6faf06d0e253dcc01cf0067bf56c1fbc5ed61fec1861b60c5accf35ffc2e56154a113004fa1db9d7171c3af8fc063918554092f5",
+							"key": "postman.sid"
+						},
+						{
+							"expires": "Invalid Date",
+							"hostOnly": false,
+							"httpOnly": false,
+							"domain": ".postman-echo.com",
+							"path": "/",
+							"secure": false,
+							"session": false,
+							"value": "GA1.3.1703443399.1459422978",
+							"key": "_ga"
+						},
+						{
+							"expires": "Invalid Date",
+							"hostOnly": true,
+							"httpOnly": true,
+							"domain": "postman-echo.com",
+							"path": "/",
+							"secure": false,
+							"session": true,
+							"value": "s%3AvuHU0EKeDbyNjVrEc7U30dMPzVu8CRaD.GOV1H9olcVzXqrwqP%2BC%2B6MVj2UczXivcN00jgPoDYfs",
+							"key": "sails.sid"
+						}
+					],
+					"responseTime": "251",
+					"body": "{\"status\":200}"
+				}
+			]
+		}
+	]
+}

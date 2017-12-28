@@ -3,9 +3,6 @@
 
 /database/database.sqlite
 
-composer.lock
+/storage/app/*.markdown
 
-1.0.json
-2.0.json
-2.1.json
-postman_collection.json
+composer.lock
