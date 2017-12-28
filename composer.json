@@ -16,6 +16,7 @@
     "require": {
         "php": ">=7.1",
         "laravel-zero/framework": "4.0.*",
+        "overtrue/pinyin": "^3.0",
         "phpoffice/phpword": "^0.13.0"
     },
     "require-dev": {

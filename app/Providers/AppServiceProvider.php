@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+
+use App\Markdown\Writer;
 use Illuminate\Support\ServiceProvider;
+use Overtrue\Pinyin\Pinyin;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +16,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
     }
 
     /**
@@ -23,6 +25,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind('writer', function () {
+            return new Writer();
+        });
+
+        $this->app->singleton('pinyin', Pinyin::class);
     }
 }
