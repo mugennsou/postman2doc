@@ -7,7 +7,7 @@ return [
     /*
      * Here goes the application name.
      */
-    'name'            => 'Convert postman collection to markdown document tool',
+    'name'            => 'Convert postman collection.json to markdown.',
 
     /*
      * Here goes the application version.

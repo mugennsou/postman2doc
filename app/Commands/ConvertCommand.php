@@ -21,7 +21,7 @@ class ConvertCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Convert postman collection file to markdown.';
+    protected $description = 'Convert postman collection.json to markdown.';
 
     /**
      * Collections.
