@@ -26,6 +26,16 @@ If convert success, you will receive a system notification, and you can see the 
 
 That's all, thank you.  
 
+## Features
+
+Convert postman collection.json to...
+
+✓ markdown
+✘ multi markdown file
+✘ HTML
+✘ PDF
+✘ docx
+
 ## License
 
 Released under the MIT license

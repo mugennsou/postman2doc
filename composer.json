@@ -15,6 +15,7 @@
     ],
     "require": {
         "php": ">=7.1",
+        "erusev/parsedown": "^1.6",
         "laravel-zero/framework": "4.0.*",
         "overtrue/pinyin": "^3.0",
         "phpoffice/phpword": "^0.13.0"

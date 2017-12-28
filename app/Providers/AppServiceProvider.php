@@ -4,6 +4,7 @@ namespace App\Providers;
 
 
 use App\Markdown\Writer;
+use Parsedown;
 use Illuminate\Support\ServiceProvider;
 use Overtrue\Pinyin\Pinyin;
 
@@ -28,6 +29,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('writer', function () {
             return new Writer();
         });
+
+        $this->app->singleton('parsedown', Parsedown::class);
 
         $this->app->singleton('pinyin', Pinyin::class);
     }

@@ -14,7 +14,8 @@ class ConvertCommand extends Command
      * @var string
      */
     protected $signature = 'convert
-                                    {file? : The postman collection filename}';
+                                    {file? : The postman collection filename}
+                                    {--html}';
 
     /**
      * The console command description.
@@ -44,14 +45,7 @@ class ConvertCommand extends Command
      */
     public function handle(): void
     {
-        $file = $this->argument('file');
-
-        if ($file)
-            $postmanFilePath = $this->getFileRealPath($file);
-        else {
-            $maybePostmanFiles = $this->getMaybePostmanFiles();
-            $postmanFilePath   = $this->getUserChoiceCollectionFile($maybePostmanFiles->toArray());
-        }
+        $postmanFilePath = $this->getFile();
 
         in_array($version = $this->getFileVersion($postmanFilePath), $this->supportVersions)
         || $this->abort("Do not support version [{$version}] postman collection.");
@@ -65,9 +59,19 @@ class ConvertCommand extends Command
         $this->notify('Convert success.', "see it {$defaultOutputFilePath}");
     }
 
-    protected function outputFile(string $outputFilePath, string $content)
+    /**
+     * @return string
+     */
+    protected function getFile(): string
     {
-        return file_put_contents($outputFilePath, $content);
+        $file = $this->argument('file');
+
+        if ($file)
+            return $this->getFileRealPath($file);
+        else {
+            $maybePostmanFiles = $this->getMaybePostmanFiles();
+            return $this->getUserChoiceCollectionFile($maybePostmanFiles->toArray());
+        }
     }
 
     /**
@@ -160,6 +164,16 @@ class ConvertCommand extends Command
         }
 
         return 'unknown';
+    }
+
+    /**
+     * @param string $outputFilePath
+     * @param string $content
+     * @return bool|int
+     */
+    protected function outputFile(string $outputFilePath, string $content)
+    {
+        return file_put_contents($outputFilePath, $content);
     }
 
     /**
