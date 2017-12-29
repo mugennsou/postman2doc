@@ -178,4 +178,16 @@ class Collection extends AbstractConvert
 
         return $this->markdown = $markdown->toString();
     }
+
+
+    /**
+     * Convert to docx.
+     */
+    public function toDocx(): void
+    {
+        /**
+         * @var \App\Writer\Docx $docx
+         */
+        $docx = app('docx');
+    }
 }

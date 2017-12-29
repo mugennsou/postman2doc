@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 
+use App\Writer\Docx;
 use App\Writer\Html;
 use App\Writer\Markdown;
 use Parsedown;
@@ -34,6 +35,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind('html', function () {
             return new Html();
         });
+
+        $this->app->singleton('docx', Docx::class);
 
         $this->app->singleton('parsedown', Parsedown::class);
 

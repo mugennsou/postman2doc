@@ -47,4 +47,15 @@ class Url extends AbstractConvert
 
         return $markdown->toString();
     }
+
+    /**
+     * Convert to docx.
+     */
+    public function toDocx(): void
+    {
+        /**
+         * @var \App\Writer\Docx $docx
+         */
+        $docx = app('docx');
+    }
 }

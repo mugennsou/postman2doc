@@ -18,4 +18,15 @@ class Response extends AbstractConvert
     {
         return '';
     }
+
+    /**
+     * Convert to docx.
+     */
+    public function toDocx(): void
+    {
+        /**
+         * @var \App\Writer\Docx $docx
+         */
+        $docx = app('docx');
+    }
 }
