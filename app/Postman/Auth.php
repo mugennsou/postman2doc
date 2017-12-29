@@ -2,9 +2,9 @@
 
 namespace App\Postman;
 
-use App\Markdown\Markdownable;
+use App\Writer\AbstractConvert;
 
-class Auth implements Markdownable
+class Auth extends AbstractConvert
 {
     public function __construct(array $auth)
     {

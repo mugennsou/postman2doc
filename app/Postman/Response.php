@@ -2,9 +2,9 @@
 
 namespace App\Postman;
 
-use App\Markdown\Markdownable;
+use App\Writer\AbstractConvert;
 
-class Response implements Markdownable
+class Response extends AbstractConvert
 {
     public function __construct(array $response)
     {

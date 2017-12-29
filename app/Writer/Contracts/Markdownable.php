@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Markdown;
+namespace App\Writer\Contracts;
 
 interface Markdownable
 {

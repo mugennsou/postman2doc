@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Markdown;
+namespace App\Writer;
 
-class Writer
+class Markdown
 {
     /**
      * @var string

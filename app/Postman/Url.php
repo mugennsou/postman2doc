@@ -2,9 +2,9 @@
 
 namespace App\Postman;
 
-use App\Markdown\Markdownable;
+use App\Writer\AbstractConvert;
 
-class Url implements Markdownable
+class Url extends AbstractConvert
 {
     /**
      * @var string
@@ -41,10 +41,10 @@ class Url implements Markdownable
      */
     public function toMarkdown(): string
     {
-        $writer = app('writer');
+        $markdown = app('markdown');
 
-        $writer->code($this->url);
+        $markdown->code($this->url);
 
-        return $writer->toString();
+        return $markdown->toString();
     }
 }

@@ -3,9 +3,9 @@
 namespace App\Postman;
 
 
-use App\Markdown\Markdownable;
+use App\Writer\AbstractConvert;
 
-class Body implements Markdownable
+class Body extends AbstractConvert
 {
     /**
      * @var string
@@ -102,12 +102,12 @@ class Body implements Markdownable
      */
     public function toMarkdown(): string
     {
-        $writer = app('writer');
+        $markdown = app('markdown');
 
-        $writer->table($this->bodyTitle, $this->body);
+        $markdown->table($this->bodyTitle, $this->body);
 
-        empty($this->rawBody) || $writer->code($this->rawBody, true);
+        empty($this->rawBody) || $markdown->code($this->rawBody, true);
 
-        return $writer->toString();
+        return $markdown->toString();
     }
 }

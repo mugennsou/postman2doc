@@ -2,10 +2,9 @@
 
 namespace App\Postman;
 
+use App\Writer\AbstractConvert;
 
-use App\Markdown\Markdownable;
-
-class Contents implements Markdownable
+class Contents extends AbstractConvert
 {
     protected $contents = [];
 
@@ -19,16 +18,16 @@ class Contents implements Markdownable
      */
     public function toMarkdown(): string
     {
-        $writer = app('writer');
+        $markdown = app('markdown');
 
         foreach ($this->contents as $item) {
-            $writer->anchorLink($item['name'], null, 3);
+            $markdown->anchorLink($item['name'], null, 3);
 
             if (isset($item['item']))
                 foreach ($item['item'] as $request)
-                    $writer->anchorLink($request['name'], null, 4);
+                    $markdown->anchorLink($request['name'], null, 4);
         }
 
-        return $writer->toString();
+        return $markdown->toString();
     }
 }
