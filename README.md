@@ -1,8 +1,8 @@
-# Convert postman collection.json to a markdown document
+# Convert postman collection.json to document
 
 ## Introduction
 
-It ia a convert postman collection.json to simple markdown document tool. 
+It ia a convert postman collection.json to simple markdown/html document tool. 
 
 ## Installation
 
@@ -17,12 +17,22 @@ composer global require mugen/postman2doc
 The following command can convert a file named 'postman_collection.json'. 
 
 ```bash
-postman2doc convert postman_collection.json
+postman2doc convert /path/to/postman_collection.json
 ```
 
 OR you can run `postman2doc` directly, then you will see command I/O.  
 
-If convert success, you will receive a system notification, and you can see the markdown file at same folder.
+If you want convert to html document, use following command.
+
+```bash
+postman2doc convert /path/to/postman_collection.json --html --no-md
+```
+OR
+```bash
+postman2doc convert:html /path/to/postman_collection.json
+```
+
+If convert success, you will receive a system notification, then you can see the document file at same folder.
 
 ## Features
 
