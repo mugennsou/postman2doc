@@ -2,7 +2,9 @@
 /vendor
 
 /database/database.sqlite
-
 /storage/app/*.markdown
+/storage/app/*.html
+
+.phplint-cache
 
 composer.lock
