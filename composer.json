@@ -1,10 +1,12 @@
 {
     "name": "mugen/postman2doc",
-    "description": "Convert postman collection.json to markdown.",
+    "description": "Convert postman collection.json to markdown/html.",
     "keywords": [
         "postman",
         "document",
-        "convert"
+        "convert",
+        "markdown",
+        "html"
     ],
     "license": "MIT",
     "authors": [
