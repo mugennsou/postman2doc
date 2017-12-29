@@ -16,6 +16,7 @@ class ConvertCommand extends Command
      */
     protected $signature = 'convert
                                     {file? : The postman collection filename}
+                                    {--no-md}
                                     {--html}';
 
     /**
@@ -63,7 +64,8 @@ class ConvertCommand extends Command
         in_array($version = $this->getFileVersion($postmanFilePath), $this->supportVersions)
         || $this->abort("Do not support version [{$version}] postman collection.");
 
-        $type = ['markdown'];
+        $type = [];
+        $this->option('no-md') || $type[] = 'markdown';
         $this->option('html') && $type[] = 'html';
 
         $this->convert
@@ -123,7 +125,7 @@ class ConvertCommand extends Command
     {
         $workDir = $workDir ?? getcwd();
 
-        $realPath = starts_with($fileName, '/') || preg_match('/^\w\:[\/\\\]/', $fileName)
+        $realPath = starts_with($fileName, '/') || starts_with($fileName, '~') || preg_match('/^\w\:[\/\\\]/', $fileName)
             ? $fileName
             : "$workDir/$fileName";
 
