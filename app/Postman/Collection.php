@@ -2,10 +2,12 @@
 
 namespace App\Postman;
 
-use App\Markdown\Markdownable;
+use App\Writer\AbstractConvert;
 
-class Collection extends AbstractCollection implements Markdownable
+class Collection extends AbstractConvert
 {
+    use CollectionTrait;
+
     /**
      * @var string
      */
@@ -22,11 +24,21 @@ class Collection extends AbstractCollection implements Markdownable
     protected $contents;
 
     /**
+     * @var boolean
+     */
+    protected $converted = false;
+
+    /**
+     * @var string
+     */
+    protected $markdown = '';
+
+    /**
      * Collection constructor.
      * @param array $collection
      * @throws Exception
      */
-    public function __construct(array $collection)
+    public function __construct(array $collection = [])
     {
         if (isset($collection['info']) && isset($collection['item'])) {
             $this->setInfo($collection['info']);
@@ -35,6 +47,15 @@ class Collection extends AbstractCollection implements Markdownable
 
             $this->setItem($collection['item']);
         }
+    }
+
+    /**
+     * @param array $collection
+     * @return static
+     */
+    public static function parse(array $collection): self
+    {
+        return new static($collection);
     }
 
     /**
@@ -116,29 +137,45 @@ class Collection extends AbstractCollection implements Markdownable
     }
 
     /**
+     * @param bool $force
+     * @return $this
+     */
+    public function forceConvert($force = false): self
+    {
+        $this->converted = $force;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function toMarkdown(): string
     {
-        $writer = app('writer');
+        if ($this->converted)
+            return $this->markdown;
 
-        $writer->h($this->name);
+        $markdown = app('markdown');
 
-        !empty($this->description) && $writer->line($this->description);
+        $markdown->h($this->name);
 
-        $writer->enter();
+        !empty($this->description) && $markdown->line($this->description);
 
-        $writer->h('Contents', 2);
-        $writer->enter();
-        $writer->word($this->contents->toMarkdown());
+        $markdown->enter();
 
-        $writer->enter();
+        $markdown->h('Contents', 2);
+        $markdown->enter();
+        $markdown->word($this->contents->toMarkdown());
 
-        $writer->h('Body', 2);
-        $writer->enter();
+        $markdown->enter();
+
+        $markdown->h('Body', 2);
+        $markdown->enter();
         foreach ($this->item as $item)
-            $writer->word($item->toMarkdown());
+            $markdown->word($item->toMarkdown());
 
-        return $writer->toString();
+        $this->converted = true;
+
+        return $this->markdown = $markdown->toString();
     }
 }

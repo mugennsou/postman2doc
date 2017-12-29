@@ -2,10 +2,12 @@
 
 namespace App\Postman;
 
-use App\Markdown\Markdownable;
+use App\Writer\AbstractConvert;
 
-class Item extends AbstractCollection implements Markdownable
+class Item extends AbstractConvert
 {
+    use CollectionTrait;
+
     /**
      * @var Request
      */
@@ -83,29 +85,29 @@ class Item extends AbstractCollection implements Markdownable
      */
     public function toMarkdown(): string
     {
-        $writer = app('writer');
+        $markdown = app('markdown');
 
-        $writer->anchor($this->name, null, is_null($this->request) ? 3 : 4);
+        $markdown->anchor($this->name, null, is_null($this->request) ? 3 : 4);
 
-        !empty($this->description) && $writer->line($this->description);
+        !empty($this->description) && $markdown->line($this->description);
 
         if (is_null($this->request)) {
             foreach ($this->item as $item)
-                $writer->word($item->toMarkdown());
+                $markdown->word($item->toMarkdown());
         } else {
-            $writer->h('REQUEST', 4);
-            $writer->enter();
-            $writer->word($this->request->toMarkdown());
+            $markdown->h('REQUEST', 4);
+            $markdown->enter();
+            $markdown->word($this->request->toMarkdown());
 
             if (count($this->response)) {
-                $writer->h('RESPONSES', 4);
+                $markdown->h('RESPONSES', 4);
                 foreach ($this->response as $response)
-                    $writer->word($response->toMarkdown());
+                    $markdown->word($response->toMarkdown());
             }
 
-            $writer->dividingLine();
+            $markdown->dividingLine();
         }
 
-        return $writer->toString();
+        return $markdown->toString();
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Postman;
 
-abstract class AbstractCollection
+trait CollectionTrait
 {
     /**
      * @var string|array

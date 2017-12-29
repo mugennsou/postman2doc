@@ -2,9 +2,9 @@
 
 namespace App\Postman;
 
-use App\Markdown\Markdownable;
+use App\Writer\AbstractConvert;
 
-class Header implements Markdownable
+class Header extends AbstractConvert
 {
     /**
      * @var array
@@ -38,10 +38,10 @@ class Header implements Markdownable
      */
     public function toMarkdown(): string
     {
-        $writer = app('writer');
+        $markdown = app('markdown');
 
-        $writer->table($this->headerTitle, $this->header);
+        $markdown->table($this->headerTitle, $this->header);
 
-        return $writer->toString();
+        return $markdown->toString();
     }
 }

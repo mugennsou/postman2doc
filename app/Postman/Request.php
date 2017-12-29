@@ -2,10 +2,12 @@
 
 namespace App\Postman;
 
-use App\Markdown\Markdownable;
+use App\Writer\AbstractConvert;
 
-class Request extends AbstractCollection implements Markdownable
+class Request extends AbstractConvert
 {
+    use CollectionTrait;
+
     /**
      * @var Auth
      */
@@ -105,27 +107,27 @@ class Request extends AbstractCollection implements Markdownable
      */
     public function toMarkdown(): string
     {
-        $writer = app('writer');
+        $markdown = app('markdown');
 
-        !empty($this->description) && $writer->line($this->description);
+        !empty($this->description) && $markdown->line($this->description);
 
-        $writer->h('URL', 5);
-        $writer->code($this->method);
-        $writer->word($this->url->toMarkdown());
-        $writer->enter(2);
+        $markdown->h('URL', 5);
+        $markdown->code($this->method);
+        $markdown->word($this->url->toMarkdown());
+        $markdown->enter(2);
 
         if ($this->header->hasHeader()) {
-            $writer->h('HEADER', 5);
-            $writer->word($this->header->toMarkdown());
-            $writer->enter();
+            $markdown->h('HEADER', 5);
+            $markdown->word($this->header->toMarkdown());
+            $markdown->enter();
         }
 
         if ($this->body->hasBody()) {
-            $writer->h('BODY', 5);
-            $writer->word($this->body->toMarkdown());
-            $writer->enter();
+            $markdown->h('BODY', 5);
+            $markdown->word($this->body->toMarkdown());
+            $markdown->enter();
         }
 
-        return $writer->toString();
+        return $markdown->toString();
     }
 }

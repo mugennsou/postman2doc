@@ -3,6 +3,7 @@
 namespace App\Commands;
 
 use App\Postman\Collection;
+use App\Writer\Convert;
 use LaravelZero\Framework\Commands\Command;
 
 class ConvertCommand extends Command
@@ -39,6 +40,18 @@ class ConvertCommand extends Command
     ];
 
     /**
+     * @var Convert
+     */
+    protected $convert;
+
+    public function __construct(Convert $convert)
+    {
+        parent::__construct();
+
+        $this->convert = $convert;
+    }
+
+    /**
      * Execute the console command.
      *
      * @return mixed
@@ -50,13 +63,14 @@ class ConvertCommand extends Command
         in_array($version = $this->getFileVersion($postmanFilePath), $this->supportVersions)
         || $this->abort("Do not support version [{$version}] postman collection.");
 
-        $collection = new Collection($this->getFileContent($postmanFilePath));
+        $type = ['markdown'];
+        $this->option('html') && $type[] = 'html';
 
-        $defaultOutputFilePath = $postmanFilePath . '.markdown';
+        $this->convert
+            ->setCollection(Collection::parse($this->getFileContent($postmanFilePath)))
+            ->output($postmanFilePath, $type);
 
-        $this->outputFile($defaultOutputFilePath, $collection->toMarkdown());
-
-        $this->notify('Convert success.', "see it {$defaultOutputFilePath}");
+        $this->notify('Convert success.', 'See it at' . pathinfo($postmanFilePath)['dirname']);
     }
 
     /**
@@ -164,16 +178,6 @@ class ConvertCommand extends Command
         }
 
         return 'unknown';
-    }
-
-    /**
-     * @param string $outputFilePath
-     * @param string $content
-     * @return bool|int
-     */
-    protected function outputFile(string $outputFilePath, string $content)
-    {
-        return file_put_contents($outputFilePath, $content);
     }
 
     /**

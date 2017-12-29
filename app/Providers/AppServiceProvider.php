@@ -3,7 +3,8 @@
 namespace App\Providers;
 
 
-use App\Markdown\Writer;
+use App\Writer\Html;
+use App\Writer\Markdown;
 use Parsedown;
 use Illuminate\Support\ServiceProvider;
 use Overtrue\Pinyin\Pinyin;
@@ -26,8 +27,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('writer', function () {
-            return new Writer();
+        $this->app->bind('markdown', function () {
+            return new Markdown();
+        });
+
+        $this->app->bind('html', function () {
+            return new Html();
         });
 
         $this->app->singleton('parsedown', Parsedown::class);
