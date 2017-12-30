@@ -2,6 +2,7 @@
 
 namespace App\Writer;
 
+use App\Postman\Collection;
 use PhpOffice\PhpWord\Element\Section;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
@@ -22,10 +23,9 @@ class Docx
     /**
      * Docx constructor.
      * @param PhpWord $word
-     * @param IOFactory $factory
      * @throws \PhpOffice\PhpWord\Exception\Exception
      */
-    public function __construct(PhpWord $word, IOFactory $factory)
+    public function __construct(PhpWord $word)
     {
         $this->word = $word;
 
@@ -40,5 +40,16 @@ class Docx
         $sections = $this->word->getSections();
 
         return empty($sections) ? $this->word->addSection() : $sections[0];
+    }
+
+    /**
+     * @param Collection $collection
+     * @param string $path
+     */
+    public function save(Collection $collection, string $path): void
+    {
+        $collection->toDocx();
+
+        $this->generator->save("{$path}.docx");
     }
 }

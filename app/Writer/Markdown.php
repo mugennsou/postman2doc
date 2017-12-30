@@ -2,6 +2,8 @@
 
 namespace App\Writer;
 
+use App\Postman\Collection;
+
 class Markdown
 {
     /**
@@ -171,5 +173,14 @@ class Markdown
     protected function isH(int $h = null): bool
     {
         return is_int($h) && $h > 0 && $h < 7;
+    }
+
+    /**
+     * @param Collection $collection
+     * @param string $path
+     */
+    public function save(Collection $collection, string $path): void
+    {
+        file_put_contents("{$path}.markdown", $collection->toMarkdown());
     }
 }

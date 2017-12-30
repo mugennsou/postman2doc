@@ -2,6 +2,8 @@
 
 namespace App\Writer;
 
+use App\Postman\Collection;
+
 class Html
 {
     /**
@@ -23,5 +25,14 @@ class Html
     public function toString(): string
     {
         return $this->content;
+    }
+
+    /**
+     * @param Collection $collection
+     * @param string $path
+     */
+    public function save(Collection $collection, string $path): void
+    {
+        file_put_contents("{$path}.html", $collection->toHtml());
     }
 }

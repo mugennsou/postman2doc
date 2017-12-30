@@ -4,14 +4,14 @@ namespace App\Commands;
 
 use LaravelZero\Framework\Commands\Command;
 
-class ConvertHtmlCommand extends Command
+class ConvertDocxCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'convert:html
+    protected $signature = 'convert:docx
                                         {file? : The postman collection filename}';
 
     /**
@@ -19,7 +19,7 @@ class ConvertHtmlCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Convert postman collection.json to html.';
+    protected $description = 'Convert postman collection.json to docx.';
 
     /**
      * Execute the console command.
@@ -30,7 +30,7 @@ class ConvertHtmlCommand extends Command
     {
         $this->call('convert', [
             'file'    => $this->argument('file'),
-            '--html'  => true,
+            '--docx'  => true,
             '--no-md' => true,
         ]);
     }

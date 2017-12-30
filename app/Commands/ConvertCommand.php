@@ -3,7 +3,6 @@
 namespace App\Commands;
 
 use App\Postman\Collection;
-use App\Writer\Convert;
 use LaravelZero\Framework\Commands\Command;
 
 class ConvertCommand extends Command
@@ -17,6 +16,7 @@ class ConvertCommand extends Command
     protected $signature = 'convert
                                     {file? : The postman collection filename}
                                     {--no-md}
+                                    {--docx}
                                     {--html}';
 
     /**
@@ -41,16 +41,13 @@ class ConvertCommand extends Command
     ];
 
     /**
-     * @var Convert
+     * @var array
      */
-    protected $convert;
-
-    public function __construct(Convert $convert)
-    {
-        parent::__construct();
-
-        $this->convert = $convert;
-    }
+    protected $supportExt = [
+        'markdown',
+        'docx',
+        'html',
+    ];
 
     /**
      * Execute the console command.
@@ -66,11 +63,10 @@ class ConvertCommand extends Command
 
         $type = [];
         $this->option('no-md') || $type[] = 'markdown';
+        $this->option('docx') && $type[] = 'docx';
         $this->option('html') && $type[] = 'html';
 
-        $this->convert
-            ->setCollection(Collection::parse($this->getFileContent($postmanFilePath)))
-            ->output($postmanFilePath, $type);
+        $this->output(Collection::parse($this->getFileContent($postmanFilePath)), $postmanFilePath, $type);
 
         $this->notify('Convert success.', 'See it at' . pathinfo($postmanFilePath)['dirname']);
     }
@@ -180,6 +176,21 @@ class ConvertCommand extends Command
         }
 
         return 'unknown';
+    }
+
+    /**
+     * Convert file.
+     * @param Collection $collection
+     * @param string $path
+     * @param string|array $type
+     */
+    public function output(Collection $collection, string $path, $type): void
+    {
+        if (is_string($type) && in_array($type, $this->supportExt))
+            app($type)->save($collection, $path);
+
+        elseif (is_array($type))
+            foreach ($type as $ext) $this->output($collection, $path, $ext);
     }
 
     /**
