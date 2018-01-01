@@ -98,17 +98,15 @@ class Body extends AbstractConvert
     }
 
     /**
-     * @return string
+     * To markdown
      */
-    public function toMarkdown(): string
+    public function toMarkdown(): void
     {
         $markdown = app('markdown');
 
         $markdown->table($this->bodyTitle, $this->body);
 
         empty($this->rawBody) || $markdown->code($this->rawBody, true);
-
-        return $markdown->toString();
     }
 
 

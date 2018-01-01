@@ -9,14 +9,14 @@ use App\Writer\Contracts\Markdownable;
 abstract class AbstractConvert implements Markdownable, Htmlable, Docxable
 {
     /**
-     * @return string
+     * To html.
      */
-    public function toHtml(): string
+    public function toHtml(): void
     {
-        $html = app('html');
+        $html     = app('html');
+        $markdown = app('markdown');
 
-        $html->markdown($this->toMarkdown());
-
-        return $html->toString();
+        $this->toMarkdown();
+        $html->markdown($markdown->toString());
     }
 }

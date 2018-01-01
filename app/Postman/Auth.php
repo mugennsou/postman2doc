@@ -12,11 +12,10 @@ class Auth extends AbstractConvert
 
     /**
      * TODO:
-     * @return string
+     * To markdown
      */
-    public function toMarkdown(): string
+    public function toMarkdown(): void
     {
-        return '';
     }
 
     /**

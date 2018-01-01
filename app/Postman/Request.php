@@ -103,9 +103,9 @@ class Request extends AbstractConvert
     }
 
     /**
-     * @return string
+     * To markdown
      */
-    public function toMarkdown(): string
+    public function toMarkdown(): void
     {
         $markdown = app('markdown');
 
@@ -113,22 +113,20 @@ class Request extends AbstractConvert
 
         $markdown->h('URL', 5);
         $markdown->code($this->method);
-        $markdown->word($this->url->toMarkdown());
+        $this->url->toMarkdown();
         $markdown->enter(2);
 
         if ($this->header->hasHeader()) {
             $markdown->h('HEADER', 5);
-            $markdown->word($this->header->toMarkdown());
+            $this->header->toMarkdown();
             $markdown->enter();
         }
 
         if ($this->body->hasBody()) {
             $markdown->h('BODY', 5);
-            $markdown->word($this->body->toMarkdown());
+            $this->body->toMarkdown();
             $markdown->enter();
         }
-
-        return $markdown->toString();
     }
 
     /**

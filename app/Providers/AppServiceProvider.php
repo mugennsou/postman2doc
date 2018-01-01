@@ -28,13 +28,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('markdown', function () {
-            return new Markdown();
-        });
+        $this->app->singleton('markdown', Markdown::class);
 
-        $this->app->bind('html', function () {
-            return new Html();
-        });
+        $this->app->singleton('html', Html::class);
 
         $this->app->singleton('docx', Docx::class);
 

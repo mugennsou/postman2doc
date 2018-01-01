@@ -5,7 +5,7 @@ namespace App\Writer\Contracts;
 interface Htmlable
 {
     /**
-     * @return string
+     * To html.
      */
-    public function toHtml(): string;
+    public function toHtml(): void;
 }

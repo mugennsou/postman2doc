@@ -2,8 +2,6 @@
 
 namespace App\Writer;
 
-use App\Postman\Collection;
-
 class Markdown
 {
     /**
@@ -12,11 +10,26 @@ class Markdown
     protected $content = '';
 
     /**
+     * @var boolean
+     */
+    protected $converted = false;
+
+    /**
      * @return string
      */
     public function toString(): string
     {
+        $this->converted = true;
+
         return $this->content;
+    }
+
+    /**
+     * @return bool
+     */
+    public function converted()
+    {
+        return $this->converted;
     }
 
     /**
@@ -24,7 +37,7 @@ class Markdown
      */
     public function word(string $content): void
     {
-        $this->content .= $content;
+        $this->converted || $this->content .= $content;
     }
 
     /**
@@ -176,11 +189,10 @@ class Markdown
     }
 
     /**
-     * @param Collection $collection
      * @param string $path
      */
-    public function save(Collection $collection, string $path): void
+    public function save(string $path): void
     {
-        file_put_contents("{$path}.markdown", $collection->toMarkdown());
+        file_put_contents("{$path}.markdown", $this->toString());
     }
 }

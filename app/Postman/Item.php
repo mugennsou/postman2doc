@@ -81,9 +81,9 @@ class Item extends AbstractConvert
     }
 
     /**
-     * @return string
+     * To markdown
      */
-    public function toMarkdown(): string
+    public function toMarkdown(): void
     {
         $markdown = app('markdown');
 
@@ -92,23 +92,19 @@ class Item extends AbstractConvert
         !empty($this->description) && $markdown->line($this->description);
 
         if (is_null($this->request)) {
-            foreach ($this->item as $item)
-                $markdown->word($item->toMarkdown());
+            foreach ($this->item as $item) $item->toMarkdown();
         } else {
             $markdown->h('REQUEST', 4);
             $markdown->enter();
-            $markdown->word($this->request->toMarkdown());
+            $this->request->toMarkdown();
 
             if (count($this->response)) {
                 $markdown->h('RESPONSES', 4);
-                foreach ($this->response as $response)
-                    $markdown->word($response->toMarkdown());
+                foreach ($this->response as $response) $response->toMarkdown();
             }
 
             $markdown->dividingLine();
         }
-
-        return $markdown->toString();
     }
 
     /**

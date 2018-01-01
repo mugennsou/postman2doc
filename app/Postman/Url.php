@@ -37,15 +37,13 @@ class Url extends AbstractConvert
     }
 
     /**
-     * @return string
+     * To markdown
      */
-    public function toMarkdown(): string
+    public function toMarkdown(): void
     {
         $markdown = app('markdown');
 
         $markdown->code($this->url);
-
-        return $markdown->toString();
     }
 
     /**

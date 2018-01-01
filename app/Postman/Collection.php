@@ -24,11 +24,6 @@ class Collection extends AbstractConvert
     protected $contents;
 
     /**
-     * @var boolean
-     */
-    protected $converted = false;
-
-    /**
      * @var string
      */
     protected $markdown = '';
@@ -137,48 +132,26 @@ class Collection extends AbstractConvert
     }
 
     /**
-     * @param bool $force
-     * @return $this
+     * To markdown
      */
-    public function forceConvert($force = false): self
+    public function toMarkdown(): void
     {
-        $this->converted = $force;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function toMarkdown(): string
-    {
-        if ($this->converted)
-            return $this->markdown;
-
         $markdown = app('markdown');
+        if ($markdown->converted()) return;
 
         $markdown->h($this->name);
-
         !empty($this->description) && $markdown->line($this->description);
-
         $markdown->enter();
 
         $markdown->h('Contents', 2);
         $markdown->enter();
-        $markdown->word($this->contents->toMarkdown());
-
+        $this->contents->toMarkdown();
         $markdown->enter();
 
         $markdown->h('Body', 2);
         $markdown->enter();
-        foreach ($this->item as $item)
-            $markdown->word($item->toMarkdown());
-
-        $this->converted = true;
-
-        return $this->markdown = $markdown->toString();
+        foreach ($this->item as $item) $item->toMarkdown();
     }
-
 
     /**
      * Convert to docx.
@@ -189,5 +162,17 @@ class Collection extends AbstractConvert
          * @var \App\Writer\Docx $docx
          */
         $docx = app('docx');
+
+        $section = $docx->getLastSection();
+
+        $section->addTitle($this->name);
+        !empty($this->description) && $section->addText($this->description);
+
+        $section->addTitle('Contents');
+        $this->contents->toDocx();
+
+        $section->addTitle('Body');
+        foreach ($this->item as $item)
+            $item->toDocx();
     }
 }

@@ -2,14 +2,17 @@
 
 namespace App\Writer;
 
-use App\Postman\Collection;
-
 class Html
 {
     /**
      * @var string
      */
     protected $content = '';
+
+    /**
+     * @var boolean
+     */
+    protected $converted = false;
 
     /**
      * @param string $markdown
@@ -24,15 +27,24 @@ class Html
      */
     public function toString(): string
     {
+        $this->converted = true;
+
         return $this->content;
     }
 
     /**
-     * @param Collection $collection
+     * @return bool
+     */
+    public function converted()
+    {
+        return $this->converted;
+    }
+
+    /**
      * @param string $path
      */
-    public function save(Collection $collection, string $path): void
+    public function save(string $path): void
     {
-        file_put_contents("{$path}.html", $collection->toHtml());
+        file_put_contents("{$path}.html", $this->toString());
     }
 }

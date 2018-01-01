@@ -14,9 +14,9 @@ class Contents extends AbstractConvert
     }
 
     /**
-     * @return string
+     * To markdown
      */
-    public function toMarkdown(): string
+    public function toMarkdown(): void
     {
         $markdown = app('markdown');
 
@@ -27,8 +27,6 @@ class Contents extends AbstractConvert
                 foreach ($item['item'] as $request)
                     $markdown->anchorLink($request['name'], null, 4);
         }
-
-        return $markdown->toString();
     }
 
     /**

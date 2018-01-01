@@ -34,15 +34,13 @@ class Header extends AbstractConvert
     }
 
     /**
-     * @return string
+     * To markdown
      */
-    public function toMarkdown(): string
+    public function toMarkdown(): void
     {
         $markdown = app('markdown');
 
         $markdown->table($this->headerTitle, $this->header);
-
-        return $markdown->toString();
     }
 
     /**

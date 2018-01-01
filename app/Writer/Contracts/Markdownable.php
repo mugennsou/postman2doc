@@ -4,8 +4,5 @@ namespace App\Writer\Contracts;
 
 interface Markdownable
 {
-    /**
-     * @return string
-     */
-    public function toMarkdown(): string;
+    public function toMarkdown(): void;
 }
