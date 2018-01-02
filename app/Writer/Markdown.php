@@ -63,8 +63,9 @@ class Markdown
      */
     public function h(string $content, int $h = 1): void
     {
-        $this->word(str_repeat('#', $h) . " {$content}");
-        $this->enter();
+        $content = $this->isH($h) ? str_repeat('#', $h) . " {$content}" : $content;
+
+        $this->line($content);
     }
 
     /**

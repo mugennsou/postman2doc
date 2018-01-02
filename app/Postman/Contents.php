@@ -14,29 +14,25 @@ class Contents extends AbstractConvert
     }
 
     /**
-     * To markdown
+     * @param string $type
      */
-    public function toMarkdown(): void
-    {
-        $markdown = app('markdown');
-
-        foreach ($this->contents as $item) {
-            $markdown->anchorLink($item['name'], null, 3);
-
-            if (isset($item['item']))
-                foreach ($item['item'] as $request)
-                    $markdown->anchorLink($request['name'], null, 4);
-        }
-    }
-
-    /**
-     * Convert to docx.
-     */
-    public function toDocx(): void
+    public function convert(string $type): void
     {
         /**
-         * @var \App\Writer\Docx $docx
+         * @var \App\Writer\Markdown|\App\Writer\Html|\App\Writer\Docx $writer
          */
-        $docx = app('docx');
+        $writer = app($type);
+
+        foreach ($this->contents as $item) {
+            $writer->anchorLink($item['name'], null, 3);
+            $writer->enter();
+
+            if (isset($item['item'])) {
+                foreach ($item['item'] as $request)
+                    $writer->anchorLink($request['name'], null, 4);
+
+                $writer->enter();
+            }
+        }
     }
 }

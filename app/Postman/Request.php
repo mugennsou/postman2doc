@@ -103,40 +103,32 @@ class Request extends AbstractConvert
     }
 
     /**
-     * To markdown
+     * @param string $type
      */
-    public function toMarkdown(): void
+    public function convert(string $type): void
     {
-        $markdown = app('markdown');
+        /**
+         * @var \App\Writer\Markdown|\App\Writer\Html|\App\Writer\Docx $writer
+         */
+        $writer = app($type);
 
-        !empty($this->description) && $markdown->line($this->description);
+        !empty($this->description) && $writer->line($this->description);
 
-        $markdown->h('URL', 5);
-        $markdown->code($this->method);
-        $this->url->toMarkdown();
-        $markdown->enter(2);
+        $writer->h('URL', 5);
+        $writer->code($this->method);
+        $this->url->convert($type);
+        $writer->enter(2);
 
         if ($this->header->hasHeader()) {
-            $markdown->h('HEADER', 5);
-            $this->header->toMarkdown();
-            $markdown->enter();
+            $writer->h('HEADER', 5);
+            $this->header->convert($type);
+            $writer->enter();
         }
 
         if ($this->body->hasBody()) {
-            $markdown->h('BODY', 5);
-            $this->body->toMarkdown();
-            $markdown->enter();
+            $writer->h('BODY', 5);
+            $this->body->convert($type);
+            $writer->enter();
         }
-    }
-
-    /**
-     * Convert to docx.
-     */
-    public function toDocx(): void
-    {
-        /**
-         * @var \App\Writer\Docx $docx
-         */
-        $docx = app('docx');
     }
 }

@@ -12,20 +12,14 @@ class Auth extends AbstractConvert
 
     /**
      * TODO:
-     * To markdown
+     * @param string $type
      */
-    public function toMarkdown(): void
-    {
-    }
-
-    /**
-     * Convert to docx.
-     */
-    public function toDocx(): void
+    public function convert(string $type): void
     {
         /**
-         * @var \App\Writer\Docx $docx
+         * @var \App\Writer\Markdown|\App\Writer\Html|\App\Writer\Docx $writer
          */
-        $docx = app('docx');
+        $writer = app($type);
+
     }
 }

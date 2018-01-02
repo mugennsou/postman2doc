@@ -81,40 +81,32 @@ class Item extends AbstractConvert
     }
 
     /**
-     * To markdown
+     * @param string $type
      */
-    public function toMarkdown(): void
-    {
-        $markdown = app('markdown');
-
-        $markdown->anchor($this->name, null, is_null($this->request) ? 3 : 4);
-
-        !empty($this->description) && $markdown->line($this->description);
-
-        if (is_null($this->request)) {
-            foreach ($this->item as $item) $item->toMarkdown();
-        } else {
-            $markdown->h('REQUEST', 4);
-            $markdown->enter();
-            $this->request->toMarkdown();
-
-            if (count($this->response)) {
-                $markdown->h('RESPONSES', 4);
-                foreach ($this->response as $response) $response->toMarkdown();
-            }
-
-            $markdown->dividingLine();
-        }
-    }
-
-    /**
-     * Convert to docx.
-     */
-    public function toDocx(): void
+    public function convert(string $type): void
     {
         /**
-         * @var \App\Writer\Docx $docx
+         * @var \App\Writer\Markdown|\App\Writer\Html|\App\Writer\Docx $writer
          */
-        $docx = app('docx');
+        $writer = app($type);
+
+        $writer->anchor($this->name, null, is_null($this->request) ? 3 : 4);
+
+        !empty($this->description) && $writer->line($this->description);
+
+        if (is_null($this->request)) {
+            foreach ($this->item as $item) $item->convert($type);
+        } else {
+            $writer->h('REQUEST', 4);
+            $writer->enter();
+            $this->request->convert($type);
+
+            if (count($this->response)) {
+                $writer->h('RESPONSES', 4);
+                foreach ($this->response as $response) $response->convert($type);
+            }
+
+            $writer->dividingLine();
+        }
     }
 }

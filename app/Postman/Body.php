@@ -98,26 +98,17 @@ class Body extends AbstractConvert
     }
 
     /**
-     * To markdown
+     * @param string $type
      */
-    public function toMarkdown(): void
-    {
-        $markdown = app('markdown');
-
-        $markdown->table($this->bodyTitle, $this->body);
-
-        empty($this->rawBody) || $markdown->code($this->rawBody, true);
-    }
-
-
-    /**
-     * Convert to docx.
-     */
-    public function toDocx(): void
+    public function convert(string $type): void
     {
         /**
-         * @var \App\Writer\Docx $docx
+         * @var \App\Writer\Markdown|\App\Writer\Html|\App\Writer\Docx $writer
          */
-        $docx = app('docx');
+        $writer = app($type);
+
+        $writer->table($this->bodyTitle, $this->body);
+
+        empty($this->rawBody) || $writer->code($this->rawBody, true);
     }
 }

@@ -187,8 +187,7 @@ class ConvertCommand extends Command
     public function output(Collection $collection, string $path, $type): void
     {
         if (is_string($type) && in_array($type, $this->supportExt)) {
-            $action = 'to' . ucfirst($type);
-            $collection->{$action}();
+            $collection->convert($type);
             app($type)->save($path);
         } elseif (is_array($type))
             foreach ($type as $ext) $this->output($collection, $path, $ext);

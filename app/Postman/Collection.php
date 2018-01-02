@@ -132,47 +132,26 @@ class Collection extends AbstractConvert
     }
 
     /**
-     * To markdown
+     * @param string $type
      */
-    public function toMarkdown(): void
-    {
-        $markdown = app('markdown');
-        if ($markdown->converted()) return;
-
-        $markdown->h($this->name);
-        !empty($this->description) && $markdown->line($this->description);
-        $markdown->enter();
-
-        $markdown->h('Contents', 2);
-        $markdown->enter();
-        $this->contents->toMarkdown();
-        $markdown->enter();
-
-        $markdown->h('Body', 2);
-        $markdown->enter();
-        foreach ($this->item as $item) $item->toMarkdown();
-    }
-
-    /**
-     * Convert to docx.
-     */
-    public function toDocx(): void
+    public function convert(string $type): void
     {
         /**
-         * @var \App\Writer\Docx $docx
+         * @var \App\Writer\Markdown|\App\Writer\Html|\App\Writer\Docx $writer
          */
-        $docx = app('docx');
+        $writer = app($type);
 
-        $section = $docx->getLastSection();
+        $writer->h($this->name);
+        !empty($this->description) && $writer->line($this->description);
+        $writer->enter();
 
-        $section->addTitle($this->name);
-        !empty($this->description) && $section->addText($this->description);
+        $writer->enter();
+        $this->contents->convert($type);
 
-        $section->addTitle('Contents');
-        $this->contents->toDocx();
+        $writer->enter();
+        $writer->dividingLine();
 
-        $section->addTitle('Body');
-        foreach ($this->item as $item)
-            $item->toDocx();
+        $writer->enter();
+        foreach ($this->item as $item) $item->convert($type);
     }
 }

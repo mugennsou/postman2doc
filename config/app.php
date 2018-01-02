@@ -7,12 +7,12 @@ return [
     /*
      * Here goes the application name.
      */
-    'name'            => 'Convert postman collection.json to markdown/html.',
+    'name'            => 'Convert postman collection.json to markdown/html/docx.',
 
     /*
      * Here goes the application version.
      */
-    'version'         => '0.0.5',
+    'version'         => '0.1.0',
 
     /*
      * Here goes the application default command. By default
