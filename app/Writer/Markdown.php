@@ -63,7 +63,17 @@ class Markdown
      */
     public function h(string $content, int $h = 1): void
     {
-        $content = $this->isH($h) ? str_repeat('#', $h) . " {$content}" : $content;
+        $isH = $this->isH($h);
+
+        if ($isH) {
+            if ($h == 0) {
+                $content = "- $content";
+            } else if ($h == 1) {
+                $content = "   * $content";
+            } else {
+                $content = str_repeat('#', $h) . " {$content}";
+            }
+        }
 
         $this->line($content);
     }

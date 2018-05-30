@@ -24,12 +24,12 @@ class Contents extends AbstractConvert
         $writer = app($type);
 
         foreach ($this->contents as $item) {
-            $writer->anchorLink($item['name'], null, 3);
+            $writer->anchorLink($item['name'], null, 0);
             $writer->enter();
 
             if (isset($item['item'])) {
                 foreach ($item['item'] as $request)
-                    $writer->anchorLink($request['name'], null, 4);
+                    $writer->anchorLink($request['name'], null, 1);
 
                 $writer->enter();
             }

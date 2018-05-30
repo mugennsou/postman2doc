@@ -97,6 +97,7 @@ class Item extends AbstractConvert
         if (is_null($this->request)) {
             foreach ($this->item as $item) $item->convert($type);
         } else {
+            $writer->enter();
             $writer->h('REQUEST', 4);
             $writer->enter();
             $this->request->convert($type);
