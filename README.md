@@ -2,7 +2,7 @@
 
 ## Introduction
 
-It ia a convert postman collection.json to simple markdown/html/docx document tool. 
+It is a convert postman collection.json to simple markdown/html/docx document tool. 
 
 ## Installation
 
